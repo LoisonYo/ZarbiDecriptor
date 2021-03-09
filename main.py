@@ -14,7 +14,7 @@ def initZarbis(zarbis):
         filename = file.split('.')
         zarbis[filename[0]] = img
 
-def displayWindow() :
+def displayWindow():
     label = tkinter.Label(window, text="Texte à convertir:")
     label.pack()
 
@@ -25,7 +25,7 @@ def displayWindow() :
 
     window.mainloop()
 
-def work() :
+def work():
     text = inputText.get().lower()
 
     zarbiText = convert(text)
@@ -34,16 +34,27 @@ def work() :
     text = process(zarbiText)
     print(text)
 
-def convert(text) :
+def convert(text):
     zarbiArray = []
     for c in text:
         zarbiArray.append(zarbis[c])
 
     return cv2.hconcat(zarbiArray)
 
-def process(img) :
-    #TODO traitement
-    return "TEXT"
+def process(img):
+    dic = {}
+    text_res = ""
+    for name, template in zarbis.items():
+        img_res = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
+        img_res = np.around(img_res, 3)
+        img_res = np.where(img_res == 1)
+        for x in img_res[1]:
+            dic[x] = name
+
+    for key in sorted(dic.keys()):
+        text_res += dic[key]
+
+    return text_res
 
 if __name__ == "__main__":
     zarbis = dict()
