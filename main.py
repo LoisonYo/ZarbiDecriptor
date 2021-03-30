@@ -3,9 +3,13 @@ import os
 import glob
 from cv2 import cv2
 import numpy as np
+from ZarbiEncryptor import ZarbiEncryptor
+from ZarbiNoiseMaker import ZarbiNoiseMaker
+from ZarbiTemplateMatching import ZarbiTemplateMatching
+from ZarbiSizeManager import ZarbiSizeManager
 
 window = tkinter.Tk()
-inputText = tkinter.Entry(window, textvariable=str, width=30)
+inputText = tkinter.Entry(window, textvariable="abcdefghijklmnopqrstuvwxyz", width=30)
 
 def initZarbis(zarbis):
     os.chdir("./zarbis")
@@ -13,6 +17,7 @@ def initZarbis(zarbis):
         img = cv2.imread(file)
         filename = file.split('.')
         zarbis[filename[0]] = img
+    os.chdir("../")
 
 def displayWindow():
     label = tkinter.Label(window, text="Texte à convertir:")
@@ -26,35 +31,20 @@ def displayWindow():
     window.mainloop()
 
 def work():
-    text = inputText.get().lower()
+    #text = inputText.get().lower()
+    zarbiText = cv2.imread("img.png")
 
-    zarbiText = convert(text)
+    #zarbiText = ZarbiEncryptor().process(text, zarbis)
     cv2.imshow("zarbi", zarbiText)
 
-    text = process(zarbiText)
+    zarbiNoisyText = ZarbiNoiseMaker().process(zarbiText, noise_type='blur')
+    cv2.imshow("zarbi noise", zarbiNoisyText)
+
+    zarbiText = ZarbiSizeManager().process(zarbiText, zarbis['a'].shape[0])
+    cv2.imshow("resize", zarbiText)
+
+    text = ZarbiTemplateMatching().process(zarbiNoisyText, zarbis, 0.03)
     print(text)
-
-def convert(text):
-    zarbiArray = []
-    for c in text:
-        zarbiArray.append(zarbis[c])
-
-    return cv2.hconcat(zarbiArray)
-
-def process(img):
-    dic = {}
-    text_res = ""
-    for name, template in zarbis.items():
-        img_res = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
-        img_res = np.around(img_res, 3)
-        img_res = np.where(img_res == 1)
-        for x in img_res[1]:
-            dic[x] = name
-
-    for key in sorted(dic.keys()):
-        text_res += dic[key]
-
-    return text_res
 
 if __name__ == "__main__":
     zarbis = dict()
