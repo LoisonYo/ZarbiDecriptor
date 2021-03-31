@@ -1,23 +1,15 @@
 import tkinter
-import os
-import glob
 from cv2 import cv2
 import numpy as np
+from ZarbiLoader import ZarbiLoader
 from ZarbiEncryptor import ZarbiEncryptor
 from ZarbiNoiseMaker import ZarbiNoiseMaker
+from ZarbiThresher import ZarbiThresher
 from ZarbiTemplateMatching import ZarbiTemplateMatching
 from ZarbiSizeManager import ZarbiSizeManager
 
 window = tkinter.Tk()
 inputText = tkinter.Entry(window, textvariable="abcdefghijklmnopqrstuvwxyz", width=30)
-
-def initZarbis(zarbis):
-    os.chdir("./zarbis")
-    for file in glob.glob("*.png"):
-        img = cv2.imread(file)
-        filename = file.split('.')
-        zarbis[filename[0]] = img
-    os.chdir("../")
 
 def displayWindow():
     label = tkinter.Label(window, text="Texte à convertir:")
@@ -31,22 +23,27 @@ def displayWindow():
     window.mainloop()
 
 def work():
-    #text = inputText.get().lower()
-    zarbiText = cv2.imread("img.png")
+    text = inputText.get()
 
-    #zarbiText = ZarbiEncryptor().process(text, zarbis)
-    cv2.imshow("zarbi", zarbiText)
+    #img = ZarbiEncryptor().process(text, zarbis)
+    img = cv2.imread("./img.png")
 
-    zarbiNoisyText = ZarbiNoiseMaker().process(zarbiText, noise_type='blur')
-    cv2.imshow("zarbi noise", zarbiNoisyText)
+    #img = ZarbiNoiseMaker().process(img, noise_type='blur')
+    cv2.imshow("default", img)
 
-    zarbiText = ZarbiSizeManager().process(zarbiText, zarbis['a'].shape[0])
-    cv2.imshow("resize", zarbiText)
+    img = ZarbiThresher().process(img)
+    cv2.imshow("threshed", img)
 
-    text = ZarbiTemplateMatching().process(zarbiNoisyText, zarbis, 0.03)
-    print(text)
+    letters = ZarbiSizeManager().process(img)
+    for i in range(len(letters)):
+        cv2.imshow(str(i), letters[i])
+
+    result = ZarbiTemplateMatching().process(letters, zarbis)
+
+    print(result)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    zarbis = dict()
-    initZarbis(zarbis)
+    zarbis = ZarbiLoader().process()
     displayWindow()

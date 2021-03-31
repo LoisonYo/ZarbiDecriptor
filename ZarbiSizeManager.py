@@ -1,35 +1,21 @@
 from cv2 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import collections
 
 class ZarbiSizeManager:
-    def process(self, img, letterSize):
-        if img.shape[0] == letterSize:
-            return img
+    def process(self, img):
+        inverse = cv2.bitwise_not(img)
+        contours, hierarchy = cv2.findContours(inverse, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-        thresh = 250
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        average = np.around(gray.mean(axis=0))
-        threshold = [255 if a_ > thresh else 0 for a_ in average]
+        toSort = dict()
+        for cnt in contours:
+            x, y, w, h = cv2.boundingRect(cnt)
+            toSort[x] = [x, y, w, h]
 
-        plt.figure(1)
-        plt.subplot(211)
-        plt.plot(average)
-        plt.subplot(212)
-        plt.plot(threshold)
-        #plt.show()
-
-        diff = np.diff(threshold)
-        old_x = 0
         letters = []
-        for i in range(0, len(diff)):
-            if diff[i] < 0:
-                old_x = i
-            elif diff[i] > 0:
-                letters.append(img[0:img.shape[0], old_x:i])
+        for key in sorted(toSort):
+            x, y, w, h = toSort[key]
+            letters.append(img[y:y+h, x:x+w])
 
-        for i in range(len(letters)):
-            cv2.imshow(str(i), letters[i])
-
-        dim = (img.shape[1], letterSize)
-        return cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+        return letters
