@@ -8,10 +8,14 @@ class ZarbiSizeManager:
         inverse = cv2.bitwise_not(img)
         contours, hierarchy = cv2.findContours(inverse, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+        toShow = img
         toSort = dict()
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
-            toSort[x] = [x, y, w, h]
+            if w*h > 100:
+                toSort[x] = [x, y, w, h]
+                cv2.rectangle(toShow, (x, y), (x+w, y+h), (0, 0, 255), 3)
+        cv2.imshow("detection", toShow)
 
         letters = []
         for key in sorted(toSort):

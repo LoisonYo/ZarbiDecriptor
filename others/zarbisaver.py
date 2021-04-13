@@ -33,5 +33,4 @@ if __name__ == "__main__":
         zarbiArray[c] = image
 
     img = cv2.hconcat(zarbiArray)
-    img = cv2.resize(img, (500, 500))
     cv2.imwrite("./img.png", img)

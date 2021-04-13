@@ -26,23 +26,25 @@ def work():
     text = inputText.get()
 
     #img = ZarbiEncryptor().process(text, zarbis)
-    img = cv2.imread("./img.png")
+    img = cv2.imread("./img.jpg")
 
-    #img = ZarbiNoiseMaker().process(img, noise_type='blur')
     cv2.imshow("default", img)
+
+    img = ZarbiNoiseMaker().process(img, noise_type='blur')
+    cv2.imshow("gaussian blur", img)
 
     img = ZarbiThresher().process(img)
     cv2.imshow("threshed", img)
 
     letters = ZarbiSizeManager().process(img)
-    for i in range(len(letters)):
-        cv2.imshow(str(i), letters[i])
+    #for i in range(len(letters)):
+    #    cv2.imshow(str(i), letters[i])
 
-    result = ZarbiTemplateMatching().process(letters, zarbis)
+    #result = ZarbiTemplateMatching().process(letters, zarbis)
 
-    print(result)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    #print(result)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     zarbis = ZarbiLoader().process()
