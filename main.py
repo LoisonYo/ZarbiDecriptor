@@ -6,7 +6,7 @@ from ZarbiEncryptor import ZarbiEncryptor
 from ZarbiNoiseMaker import ZarbiNoiseMaker
 from ZarbiThresher import ZarbiThresher
 from ZarbiTemplateMatching import ZarbiTemplateMatching
-from ZarbiSizeManager import ZarbiSizeManager
+from ZarbiLetterDetector import ZarbiLetterDetector
 from ZarbiRotator import ZarbiRotator
 
 window = tkinter.Tk()
@@ -45,7 +45,7 @@ def work():
     #img = ZarbiRotator().process(img)
 
     print(text)
-    letters = ZarbiSizeManager().process(img)
+    letters = ZarbiLetterDetector().process(img)
     for i in range(len(letters)):
         cv2.imshow(str(i), letters[i])
 

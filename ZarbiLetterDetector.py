@@ -3,8 +3,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 import collections
 
-class ZarbiSizeManager:
+class ZarbiLetterDetector:
+    """
+    class ZarbiLetterDetector
+    ----------
+    detect all letters shape in the entry image
+    """
     def process(self, img):
+        """
+        parameter
+        ---------
+        img: np.ndarray
+            entry image with Zarbi translated text
+        ---------
+        Detect all letters in the picture, and put them in evidence with a rectangle bundary
+
+        return the same picture with the boundary
+        """
         inverse = cv2.bitwise_not(img)
         contours, hierarchy = cv2.findContours(inverse, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 

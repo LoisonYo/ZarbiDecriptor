@@ -6,15 +6,16 @@ noise_types = ['blur', 'gauss', 'poisson', 'speckle']
 class ZarbiNoiseMaker:
     """
     class ZarbiNoiseMaker
+    ----------
     Add noise to an image. The noise can be blur, gauss, poisson or speckle
     """
     def process(self, img, noise_type='blur'):
         """
-        method process
         Parameters
         ----------
         img : numpy.ndarray
             image to process
+
         noise_type : string => [blur, gauss, poisson, speckle]
             type of noise to be applied
         ----------
@@ -32,27 +33,27 @@ class ZarbiNoiseMaker:
 
     def _makeGaussianBlur(self, img):
         """
-        method makeGaussianBlur
-        parameters
+        Parameters
         ----------
         img: numpy.ndarray
             image to process
         ----------
         Add a Gaussian blur to the image
-        return: post-processed image
+
+        return the  post-processed image
         """
         return cv2.GaussianBlur(img, (5, 5), 0)
 
     def _makeGaussianNoise(self, img):
         """
-        method makeGaussianNoise
-        parameters
+        Parameters
         ----------
         img: numpy.ndarray
             image to process
         ----------
         Add a Gaussian noise to the image
-        return: post-processed image
+
+        return the post-processed image
         """
         mean = 127
         var = 0.4
@@ -64,14 +65,14 @@ class ZarbiNoiseMaker:
 
     def _makePoissonNoise(self, img):
         """
-        method makePoissonNoise
-        parameters
+        Parameters
         ----------
         img: numpy.ndarray
             image to process
         ----------
         Add a Poisson noise to the image
-        return: post-processed image
+
+        return the post-processed image
         """
         img = img.astype('uint8')
         poissonNoise = np.random.poisson(img).astype('uint8')
@@ -80,14 +81,14 @@ class ZarbiNoiseMaker:
 
     def _makeSpeckleNoise(self, img):
         """
-        method makeSpeckleNoise
-        parameters
+        Parameters
         ----------
         img: numpy.ndarray
             image to process
         ----------
         Add a speckle noise to the image
-        return: post-processed image
+
+        return the post-processed image
         """
         gauss = np.random.normal(0, 1, img.shape)
         gauss = gauss.reshape(img.shape[0], img.shape[1], img.shape[2]).astype('uint8')

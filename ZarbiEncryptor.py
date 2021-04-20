@@ -4,22 +4,23 @@ import numpy as np
 class ZarbiEncryptor:
     """
     class ZarbiNoiseEncryptor
+    ----------
     Generate a zarbi text from string text
     """
     def process(self, text, templates):
         """
-        method process
         parameters
         ----------
         text: string
-            the text string that will be encoded
+            the text string that will be encoded.
+            
         templates: array
-            an array of image template that will be the result image
+            an array of image template that will be the result image.
         ----------
         iterate trought an array of templates to create an image from an entry string, for exemple, the string `hello`
         will create an `hello` translation in zarbi
-        return:
-            The translated image
+
+        return the translated image
         """
         horizontal_margin = 5
         vertical_margin = 20
