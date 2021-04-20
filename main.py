@@ -27,7 +27,7 @@ def work():
     text = inputText.get()
 
     #img = ZarbiEncryptor().process(text, zarbis)
-    img = cv2.imread("./images/default_text.png")
+    img = cv2.imread("./images/fde9c7b0-dec5-409a-83a8-f2b991b4f904.jpg")
 
     cv2.imshow("default", img)
 
