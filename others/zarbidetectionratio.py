@@ -6,7 +6,7 @@ from cv2 import cv2
 if __name__ == "__main__":
 
     zarbis = dict()
-    os.chdir("./../zarbis")
+    os.chdir("./zarbis")
     for file in glob.glob("*.png"):
         img = cv2.imread(file)
         filename = file.split('.')

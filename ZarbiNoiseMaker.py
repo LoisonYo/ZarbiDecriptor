@@ -19,7 +19,7 @@ class ZarbiNoiseMaker:
         return cv2.GaussianBlur(img, (5, 5), 0)
 
     def _makeGaussianNoise(self, img):
-        mean = 0.2
+        mean = 127
         var = 0.4
         sigma = var ** 0.5
         gauss = np.random.normal(mean, sigma, img.shape)
