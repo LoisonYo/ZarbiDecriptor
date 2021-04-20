@@ -1,7 +1,7 @@
 from cv2 import cv2
 import numpy as np
 
-noise_types = ['blur', 'gauss', 'poisson']
+noise_types = ['blur', 'gauss', 'poisson', 'speckle']
 
 class ZarbiNoiseMaker:
     def process(self, img, noise_type='blur'):
@@ -12,6 +12,8 @@ class ZarbiNoiseMaker:
                 return self._makeGaussianNoise(img)
             if noise_type == 'poisson':
                 return self._makePoissonNoise(img)
+            if noise_type == 'speckle':
+                return self._makeSpeckleNoise(img)
 
     def _makeGaussianBlur(self, img):
         return cv2.GaussianBlur(img, (5, 5), 0)
@@ -29,4 +31,11 @@ class ZarbiNoiseMaker:
         vals = len(np.unique(img))
         vals = 2 ** np.ceil(np.log2(vals))
         noisy = np.random.poisson(img * vals) / float(vals)
+        return noisy
+
+    def _makeSpeckleNoise(self, img):
+        row, col, ch = img.shape
+        gauss = np.random.randn(row, col, ch)
+        gauss = gauss.reshape(row, col, ch)
+        noisy = img + img * gauss
         return noisy
