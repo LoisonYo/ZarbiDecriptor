@@ -2,7 +2,25 @@ from cv2 import cv2
 import numpy as np
 
 class ZarbiTemplateMatching:
+    """
+    class ZarbiTemplateMatching
+    ----------
+    Match image part with templates
+    """
     def process(self, letters, templates):
+        """
+        Parameters
+        ----------
+        letters:
+            list
+
+        templates: 
+            dictionnary
+        ----------
+        Detect the letter thought the ressemblance with her template.
+        
+        return the string result from the detection
+        """
         result = ""
 
         grayTemplates = dict()
