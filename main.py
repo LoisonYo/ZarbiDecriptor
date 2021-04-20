@@ -26,8 +26,13 @@ def displayWindow():
 def work():
     text = inputText.get()
 
+<<<<<<< HEAD
+    #img = ZarbiEncryptor().process(text, zarbis)
+    img = cv2.imread("./images/fde9c7b0-dec5-409a-83a8-f2b991b4f904.jpg")
+=======
     img = ZarbiEncryptor().process(text, zarbis)
     #img = cv2.imread("./images/default_text.png")
+>>>>>>> 06af41bffb16fb5e8a64c0ef420828e63b13a8d1
 
     cv2.imshow("default", img)
 

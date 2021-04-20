@@ -25,11 +25,24 @@ class ZarbiLetterDetector:
 
         toShow = img
         toSort = dict()
+
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
-            #if w*h > 100:
-            toSort[x] = [x, y, w, h]
-            cv2.rectangle(toShow, (x, y), (x+w, y+h), (0, 0, 255), 3)
+            if w*h > 100:
+                toSort[x] = [x, y, w, h]
+
+
+        median = np.mean(list(map(lambda a : a[2] * a[3], toSort.values())))
+        minimum = median - (median / 2)
+        maximum = median + (median / 2)
+
+        tmp = dict()
+        for key, value in toSort.items():
+            x, y, w, h = value
+            if w*h > minimum and w*h < maximum:
+                tmp[key] = value
+                cv2.rectangle(toShow, (x, y), (x+w, y+h), (0, 0, 255), 3)
+        toSort = tmp
         cv2.imshow("detection", toShow)
 
         letters = []
