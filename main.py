@@ -26,13 +26,8 @@ def displayWindow():
 def work():
     text = inputText.get()
 
-<<<<<<< HEAD
     #img = ZarbiEncryptor().process(text, zarbis)
-    img = cv2.imread("./images/fde9c7b0-dec5-409a-83a8-f2b991b4f904.jpg")
-=======
-    img = ZarbiEncryptor().process(text, zarbis)
-    #img = cv2.imread("./images/default_text.png")
->>>>>>> 06af41bffb16fb5e8a64c0ef420828e63b13a8d1
+    img = cv2.imread("./images/a183873a-b55a-46ed-ba6d-c3ccf5951c7f.jpg")
 
     cv2.imshow("default", img)
 
@@ -47,7 +42,7 @@ def work():
     img = cv2.erode(img, kernel, iterations = 1)
     cv2.imshow("erode", img)
 
-    #img = ZarbiRotator().process(img)
+    img = ZarbiRotator().process(img)
 
     print(text)
     letters = ZarbiSizeManager().process(img)
