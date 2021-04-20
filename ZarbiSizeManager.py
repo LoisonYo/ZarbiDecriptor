@@ -12,9 +12,9 @@ class ZarbiSizeManager:
         toSort = dict()
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
-            if w*h > 100:
-                toSort[x] = [x, y, w, h]
-                cv2.rectangle(toShow, (x, y), (x+w, y+h), (0, 0, 255), 3)
+            #if w*h > 100:
+            toSort[x] = [x, y, w, h]
+            cv2.rectangle(toShow, (x, y), (x+w, y+h), (0, 0, 255), 3)
         cv2.imshow("detection", toShow)
 
         letters = []

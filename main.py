@@ -7,6 +7,7 @@ from ZarbiNoiseMaker import ZarbiNoiseMaker
 from ZarbiThresher import ZarbiThresher
 from ZarbiTemplateMatching import ZarbiTemplateMatching
 from ZarbiSizeManager import ZarbiSizeManager
+from ZarbiRotator import ZarbiRotator
 
 window = tkinter.Tk()
 inputText = tkinter.Entry(window, textvariable="abcdefghijklmnopqrstuvwxyz", width=30)
@@ -26,7 +27,7 @@ def work():
     text = inputText.get()
 
     #img = ZarbiEncryptor().process(text, zarbis)
-    img = cv2.imread("./img.jpg")
+    img = cv2.imread("./images/default_text.png")
 
     cv2.imshow("default", img)
 
@@ -36,15 +37,22 @@ def work():
     img = ZarbiThresher().process(img)
     cv2.imshow("threshed", img)
 
+    kernel = np.ones((5,5),np.uint8)
+    img = cv2.dilate(img, kernel, iterations = 1)
+    img = cv2.erode(img, kernel, iterations = 1)
+    cv2.imshow("erode", img)
+
+    img = ZarbiRotator().process(img)
+
     letters = ZarbiSizeManager().process(img)
-    #for i in range(len(letters)):
-    #    cv2.imshow(str(i), letters[i])
+    for i in range(len(letters)):
+        cv2.imshow(str(i), letters[i])
 
-    #result = ZarbiTemplateMatching().process(letters, zarbis)
+    result = ZarbiTemplateMatching().process(letters, zarbis)
 
-    #print(result)
-    #cv2.waitKey(0)
-    #cv2.destroyAllWindows()
+    print(result)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     zarbis = ZarbiLoader().process()
