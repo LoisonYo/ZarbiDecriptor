@@ -26,24 +26,30 @@ def displayWindow():
 def work():
     text = inputText.get()
 
+<<<<<<< HEAD
     #img = ZarbiEncryptor().process(text, zarbis)
     img = cv2.imread("./images/fde9c7b0-dec5-409a-83a8-f2b991b4f904.jpg")
+=======
+    img = ZarbiEncryptor().process(text, zarbis)
+    #img = cv2.imread("./images/default_text.png")
+>>>>>>> 06af41bffb16fb5e8a64c0ef420828e63b13a8d1
 
     cv2.imshow("default", img)
 
-    img = ZarbiNoiseMaker().process(img, noise_type='blur')
-    cv2.imshow("gaussian blur", img)
+    img = ZarbiNoiseMaker().process(img, noise_type='poisson')
+    cv2.imshow("poisson blur", img)
 
     img = ZarbiThresher().process(img)
     cv2.imshow("threshed", img)
 
     kernel = np.ones((5,5),np.uint8)
-    img = cv2.dilate(img, kernel, iterations = 1)
+    img = cv2.dilate(img, kernel, iterations = 1) #sens opencv
     img = cv2.erode(img, kernel, iterations = 1)
     cv2.imshow("erode", img)
 
-    img = ZarbiRotator().process(img)
+    #img = ZarbiRotator().process(img)
 
+    print(text)
     letters = ZarbiSizeManager().process(img)
     for i in range(len(letters)):
         cv2.imshow(str(i), letters[i])
