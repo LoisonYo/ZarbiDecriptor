@@ -40,10 +40,10 @@ def work():
     zarbiNoisyText = ZarbiNoiseMaker().process(zarbiText, noise_type='speckle')
     cv2.imshow("zarbi noise", zarbiNoisyText)
 
-    zarbiText = ZarbiSizeManager().process(zarbiText, zarbis['a'].shape[0])
-    cv2.imshow("resize", zarbiText)
+    #zarbiText = ZarbiSizeManager().process(zarbiText, zarbis['a'].shape[0])
+    #cv2.imshow("resize", zarbiText)
 
-    text = ZarbiTemplateMatching().process(zarbiNoisyText, zarbis, 0.03)
+    #text = ZarbiTemplateMatching().process(zarbiNoisyText, zarbis, 0.03)
     print(text)
 
 if __name__ == "__main__":

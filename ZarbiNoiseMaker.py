@@ -34,8 +34,7 @@ class ZarbiNoiseMaker:
         return noisy
 
     def _makeSpeckleNoise(self, img):
-        row, col, ch = img.shape
-        gauss = np.random.randn(row, col, ch)
-        gauss = gauss.reshape(row, col, ch)
-        noisy = img + img * gauss
+        gauss = np.random. normal(0, 1, img.shape)
+        gauss = gauss.reshape(img.shape[0], img.shape[1], img.shape[2]).astype('uint8')
+        noisy = img * gauss + img 
         return noisy
