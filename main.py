@@ -37,8 +37,14 @@ def work():
     #zarbiText = ZarbiEncryptor().process(text, zarbis)
     cv2.imshow("zarbi", zarbiText)
 
-    zarbiNoisyText = ZarbiNoiseMaker().process(zarbiText, noise_type='speckle')
+    zarbiNoisyText = ZarbiNoiseMaker().process(zarbiText, noise_type='gauss')
     cv2.imshow("zarbi noise", zarbiNoisyText)
+
+    zarbiNoisyText = ZarbiNoiseMaker().process(zarbiText, noise_type='speckle')
+    cv2.imshow("zarbi snoise", zarbiNoisyText)
+
+    zarbiNoisyText = ZarbiNoiseMaker().process(zarbiText, noise_type='poisson')
+    cv2.imshow("zarbi pnoise", zarbiNoisyText)
 
     #zarbiText = ZarbiSizeManager().process(zarbiText, zarbis['a'].shape[0])
     #cv2.imshow("resize", zarbiText)
