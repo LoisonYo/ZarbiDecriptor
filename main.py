@@ -7,7 +7,6 @@ from ZarbiNoiseMaker import ZarbiNoiseMaker
 from ZarbiThresher import ZarbiThresher
 from ZarbiTemplateMatching import ZarbiTemplateMatching
 from ZarbiLetterDetector import ZarbiLetterDetector
-from ZarbiRotator import ZarbiRotator
 
 window = tkinter.Tk()
 inputText = tkinter.Entry(window, textvariable="abcdefghijklmnopqrstuvwxyz", width=30)
@@ -51,7 +50,7 @@ def workFile():
 def work(img):
     #cv2.imshow("default", img)
 
-    img = ZarbiNoiseMaker().process(img, noise_type='poisson')
+    img = ZarbiNoiseMaker().process(img, noise_type='blur')
     #cv2.imshow("poisson blur", img)
 
     img = ZarbiThresher().process(img)
@@ -62,17 +61,12 @@ def work(img):
     img = cv2.erode(img, kernel, iterations = 1)
     #cv2.imshow("erode", img)
 
-    img = ZarbiRotator().process(img)
-
     letters = ZarbiLetterDetector().process(img)
     #for i in range(len(letters)):
     #    cv2.imshow(str(i), letters[i])
 
     result = ZarbiTemplateMatching().process(letters, zarbis)
     resultField.config(text=result)
-
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     zarbis = ZarbiLoader().process()
