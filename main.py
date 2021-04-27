@@ -11,47 +11,66 @@ from ZarbiRotator import ZarbiRotator
 
 window = tkinter.Tk()
 inputText = tkinter.Entry(window, textvariable="abcdefghijklmnopqrstuvwxyz", width=30)
+filenamefield = tkinter.Label(window)
+resultField = tkinter.Label(window)
 
 def displayWindow():
-    label = tkinter.Label(window, text="Texte à convertir:")
-    label.pack()
-
+    tkinter.Label(window, text="Utilisation d'un text :").pack()
     inputText.pack()
-
-    button = tkinter.Button(window, text="Convertir", command=work)
+    button = tkinter.Button(window, text="Convertir le text", command=workText)
     button.pack()
+
+    tkinter.Label(window).pack()
+
+    tkinter.Label(window, text="Utilisation d'une image :").pack()
+    button = tkinter.Button(window, text="Charger une image", command=selectFile)
+    button.pack()
+    filenamefield.pack()
+    button = tkinter.Button(window, text="Utiliser image", command=workFile)
+    button.pack()
+
+    tkinter.Label(window).pack()
+
+    tkinter.Label(window, text="Résultat :").pack()
+    resultField.pack()
 
     window.mainloop()
 
-def work():
-    text = inputText.get()
+def selectFile():
+    filename = tkinter.filedialog.askopenfilename(initialdir = "./images", title = "Select a File")
+    filenamefield.config(text=filename)
 
-    img = ZarbiEncryptor().process(text, zarbis)
-    #img = cv2.imread("./images/default_text.png")
+def workText():
+    img = ZarbiEncryptor().process(inputText.get(), zarbis)
+    work(img)
 
-    cv2.imshow("default", img)
+def workFile():
+    img = cv2.imread(filenamefield['text'])
+    work(img)
+
+def work(img):
+    #cv2.imshow("default", img)
 
     img = ZarbiNoiseMaker().process(img, noise_type='poisson')
-    cv2.imshow("poisson blur", img)
+    #cv2.imshow("poisson blur", img)
 
     img = ZarbiThresher().process(img)
-    cv2.imshow("threshed", img)
+    #cv2.imshow("threshed", img)
 
     kernel = np.ones((5,5),np.uint8)
     img = cv2.dilate(img, kernel, iterations = 1) #sens opencv
     img = cv2.erode(img, kernel, iterations = 1)
-    cv2.imshow("erode", img)
+    #cv2.imshow("erode", img)
 
     img = ZarbiRotator().process(img)
 
-    print(text)
     letters = ZarbiLetterDetector().process(img)
-    for i in range(len(letters)):
-        cv2.imshow(str(i), letters[i])
+    #for i in range(len(letters)):
+    #    cv2.imshow(str(i), letters[i])
 
     result = ZarbiTemplateMatching().process(letters, zarbis)
+    resultField.config(text=result)
 
-    print(result)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
