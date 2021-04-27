@@ -2,12 +2,18 @@ import os
 import glob
 from cv2 import cv2
 import numpy as np
+import sys
 
 if __name__ == "__main__":
-    text = "Salut".lower()
+    try:
+        arg = str(sys.argv[1])
+    except IndexError:
+        print("you must Specify a text")
+        sys.exit(1)
+    text = arg.lower()
 
     zarbis = dict()
-    os.chdir("./zarbis")
+    os.chdir("../zarbis")
     for file in glob.glob("*.png"):
         img = cv2.imread(file)
         filename = file.split('.')
