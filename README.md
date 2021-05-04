@@ -13,10 +13,12 @@ python -m venv .venv
 ```
 
 After creating the virtual environnemen, you must activate it with:
+
 on windows:
 ```
 source .venv/Scripts/activate
 ```
+
 if you are a linux user: 
 ```
 source .venv/bin/activate
