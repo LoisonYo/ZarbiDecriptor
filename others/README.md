@@ -11,3 +11,4 @@ zarbidetectionration.py: compare all letters in /zarbis and compute a ratio betw
 
 imgcomparator.py: used a the very beginning of the project, the purpose was to check if all images has the same height. Now that the height doesn't import anymore, this file is juste an archive.
 
+note that these program may not work anymore, it's not important since they aren't used in the main software. It was just utilitary for developers

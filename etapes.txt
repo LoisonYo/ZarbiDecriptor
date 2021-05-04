@@ -1,7 +1,0 @@
-1 : Simple
-2 : Deformation (bruit, erosion, etc...)
-3 : Taille
-4 : Charger photo
-
-minAreaRectangle
-boundingRectangle

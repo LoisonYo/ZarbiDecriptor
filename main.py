@@ -14,6 +14,9 @@ filenamefield = tkinter.Label(window)
 resultField = tkinter.Label(window)
 
 def displayWindow():
+    """
+    display a simple window using Tkinter
+    """
     tkinter.Label(window, text="Utilisation d'un text :").pack()
     inputText.pack()
     button = tkinter.Button(window, text="Convertir le text", command=workText)
@@ -36,18 +39,30 @@ def displayWindow():
     window.mainloop()
 
 def selectFile():
+    """
+    Create a select file dialog menu
+    """
     filename = tkinter.filedialog.askopenfilename(initialdir = "./images", title = "Select a File")
     filenamefield.config(text=filename)
 
 def workText():
+    """
+    call the work function and work on it from text
+    """
     img = ZarbiEncryptor().process(inputText.get(), zarbis)
     work(img)
 
 def workFile():
+    """
+    call the work function and work on it from file
+    """
     img = cv2.imread(filenamefield['text'])
     work(img)
 
 def work(img):
+    """
+    The main work of the program is done here, if you want more details, uncomment each cv2.inshow(...) parts
+    """
     #cv2.imshow("default", img)
 
     img = ZarbiNoiseMaker().process(img, noise_type='blur')
