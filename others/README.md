@@ -1,6 +1,8 @@
 All files in this folder are programs that are not used by the ZarbiDecryptor software.
 ---
 
+ratio.xlsx : comparison between each zarbis letters (with tempalte matching)
+
 zarbiseparator.py:  run throught the base image in others/base.png and save all letters find in the folder /zarbis.
 
 zarbisaver.py: Take a text in param, convert it in an image translated in zarbi.
