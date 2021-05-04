@@ -12,7 +12,9 @@ to do it type in a shell:
 python -m venv .venv
 ```
 
-After creating the virtual environnemen, you must activate it with:
+---
+
+After creating the virtual environnement, you must activate it with:
 
 on windows:
 ```
@@ -23,6 +25,8 @@ if you are a linux user:
 ```
 source .venv/bin/activate
 ```
+
+---
 
 then install the dependencies:
 ```
