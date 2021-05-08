@@ -63,24 +63,25 @@ def work(img):
     """
     The main work of the program is done here, if you want more details, uncomment each cv2.inshow(...) parts
     """
-    #cv2.imshow("default", img)
+    cv2.imshow("default", img)
 
     img = ZarbiNoiseMaker().process(img, noise_type='blur')
-    #cv2.imshow("poisson blur", img)
+    cv2.imshow("poisson blur", img)
 
     img = ZarbiThresher().process(img)
-    #cv2.imshow("threshed", img)
+    cv2.imshow("threshed", img)
 
     kernel = np.ones((5,5),np.uint8)
     img = cv2.dilate(img, kernel, iterations = 1) #sens opencv
     img = cv2.erode(img, kernel, iterations = 1)
-    #cv2.imshow("erode", img)
+    cv2.imshow("erode", img)
 
     letters = ZarbiLetterDetector().process(img)
-    #for i in range(len(letters)):
-    #    cv2.imshow(str(i), letters[i])
+    for i in range(len(letters)):
+        cv2.imshow(str(i), letters[i])
 
     result = ZarbiTemplateMatching().process(letters, zarbis)
+    print(result)
     resultField.config(text=result)
 
 if __name__ == "__main__":
