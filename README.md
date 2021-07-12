@@ -13,6 +13,3 @@ Le language de programmation utilisé pour ce projet est Python 3. Pour la parti
 ## Equipe
 * Yohann Loison
 * Ugo Crucy
-
-ZarbiDecryptor is a student project made by Loison Yohann and Crucy Ugo.
-The purpose is to translate text written in a pokemon language named "unown" and to translate text in from unown to formal text.
